@@ -1,0 +1,21 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+#container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+button img {
+  width: 150px;
+  height: 150px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
