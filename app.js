@@ -1,5 +1,7 @@
 // Set array with choices
 const selectionOptions = ["Rock", "Paper", "Scissors"];
+let playerScore = 0;
+let computerScore = 0;
 const display = document.querySelector("#display");
 
 // Randomly return either Rock, Paper, or Scissors
@@ -23,12 +25,22 @@ function playRound(playerSelection, computerSelection) {
   // Check for Rock and Scissors first
   // otherwise check for greater index value
   // or tie
-  if (player === 0 && computer === 2) {
-    return "Rock beats Scissors! Player Wins!";
-  } else if (computer === 0 && player === 2) {
-    return "Rock beats Scissors! Computer Wins!";
+  if ((player === 0 && computer === 2) || (player === 2 && computer === 0)) {
+    if (player === 0) {
+      playerScore++;
+      return `Computer Plays: ${computerSelection}
+      Rock beats Scissors!
+      You Win!`;
+    } else {
+      computerScore++;
+      return `Computer Plays: ${computerSelection}
+      Rock beats Scissors!
+      You Lose!`;
+    }
   } else if (player > computer) {
-    return `${playerSelection} beats ${computerSelection}! Player Wins!`;
+    return `Computer Plays ${computerSelection}
+    ${playerSelection} beats ${computerSelection}!
+    Player Wins!`;
   } else if (player === computer) {
     return `Both picked ${computerSelection}. Tie!`;
   } else {
