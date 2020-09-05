@@ -2,6 +2,12 @@
 const selectionOptions = ["Rock", "Paper", "Scissors"];
 let playerScore = 0;
 let computerScore = 0;
+const gameRound = {
+  winner: null,
+  playerSelection: null,
+  computerSelection: computerPlay(),
+  message: null,
+};
 const display = document.querySelector("#display");
 
 // Randomly return either Rock, Paper, or Scissors
@@ -46,6 +52,13 @@ function playRound(playerSelection, computerSelection) {
   } else {
     return `${computerSelection} beats ${playerSelection}! Computer Wins!`;
   }
+}
+
+function updateScore() {
+  const playerScoreDisplay = document.querySelector("#player-score");
+  const computerScoreDisplay = document.querySelector("#computer-score");
+  playerScoreDisplay.textContent = playerScore;
+  computerScoreDisplay.textContent = computerScore;
 }
 
 // Event Listeners

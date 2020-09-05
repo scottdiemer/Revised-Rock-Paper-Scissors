@@ -2,6 +2,7 @@ html,
 body {
   height: 100%;
   width: 100%;
+  font: arial, sans-serif;
 }
 #container {
   display: flex;
@@ -18,4 +19,21 @@ button img {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#display {
+  width: 100%;
+}
+
+.scores {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.scores p,
+h1 {
+  text-align: center;
+  margin: 15px;
 }
