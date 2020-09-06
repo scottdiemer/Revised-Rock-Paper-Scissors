@@ -9,3 +9,23 @@ Messages object
 
 - input: player selection, computer selection, and game winner
 - output: returns string with "Selection" beats "Selection"
+
+## Needed Outputs
+
+- Winner
+- Player Score
+- Computer Score
+- Comentary Message
+
+## Needed Inputs
+
+- Player Selection
+- Computer Selection
+
+While player is making a selection the computer makes a selection
+
+- figure out winner
+- see winners score increase by 1
+- show computers pick
+- show message of what beats what
+- show winner

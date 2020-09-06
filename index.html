@@ -8,7 +8,19 @@
   </head>
   <body>
     <div id="container" class="center">
-      <div id="results"></div>
+      <h1 id="game-winner"></h1>
+      <div id="results">
+        <div class="scores">
+          <div>
+            <p>Player Score</p>
+            <h1 id="player-score">0</h1>
+          </div>
+          <div>
+            <p>Computer Score</p>
+            <h1 id="computer-score">0</h1>
+          </div>
+        </div>
+      </div>
       <div class="button-wrapper center">
         <button id="0">
           <img src="./images/iconfinder_hand-rock-o_1608372.svg" alt="Rock" />
@@ -26,16 +38,7 @@
       <div id="display">
         <h3 id="computer-pick"></h3>
         <p class="commentary"></p>
-        <div class="scores">
-          <div>
-            <p>Player Score</p>
-            <h1 class="player-score">0</h1>
-          </div>
-          <div>
-            <p>Computer Score</p>
-            <h1 class="computer-score">0</h1>
-          </div>
-        </div>
+        <p class="round-winner"></p>
       </div>
     </div>
     <script src="app.js"></script>

@@ -1,51 +1,9 @@
+let playerScore = 0;
+let computerScore = 0;
 // Set array with choices
-// const selectionOptions = ["Rock", "Paper", "Scissors"];
-const selectionOptions = {
-  ROCK: 0,
-  PAPER: 1,
-  SCISSORS: 2,
-};
+const selectionOptions = ["Rock", "Paper", "Scissors"];
 
-class scoreBoard {
-  constructor() {
-    this.winner = null;
-    this.playerScore = 0;
-    this.computerScore = 0;
-  }
-
-  players = { PLAYER: "player", COMPUTER: "computer" };
-
-  set winner(player) {
-    this.winner = player;
-    if (player === players.PLAYER) {
-      this.playerScore++;
-    } else {
-      this.computerScore++;
-    }
-  }
-
-  get winner() {
-    this.winner;
-  }
-}
-
-class commentaryMessage {
-  constructor(playerSelection, computerSelection) {
-    this.playerSelection = playerSelection;
-    this.computerSelection = computerSelection;
-  }
-
-  get message {
-    
-  }
-
-  messages = {
-    ROCK_BEATS_SCISSORS: "Rock Beats Scissors",
-    PAPER_BEATS_ROCK: "Paper Beats Rock",
-    SCISSORS_BEATS_PAPER: "Scissors Beats Paper",
-    TIE: `Both Picked ${capitalizeWord(playerSelection)}`,
-  };
-}
+const players = { PLAYER: "player", COMPUTER: "computer" };
 
 // Randomly return either Rock, Paper, or Scissors
 function computerPlay() {
@@ -63,6 +21,8 @@ function playRound(playerSelection, computerSelection) {
   const player = selectionOptions.indexOf(playerSelection);
   const computer = selectionOptions.indexOf(computerSelection);
 
+  postComputerPick(computerSelection);
+
   // The higher indexes beat lower indexes with the
   // exception of Rock beating Scissors
   // Check for Rock and Scissors first
@@ -70,43 +30,91 @@ function playRound(playerSelection, computerSelection) {
   // or tie
   if ((player === 0 && computer === 2) || (player === 2 && computer === 0)) {
     if (player === 0) {
-      scoreBoard.winner = players.PLAYER;
-      commentaryMessage(playerSelection, computerSelection)
-      return `Computer Plays: ${computerSelection}
-      Rock beats Scissors!
-      You Win!`;
+      updateScore(players.PLAYER);
+      postRoundWinner(players.PLAYER);
     } else {
-      return `Computer Plays: ${computerSelection}
-      Rock beats Scissors!
-      You Lose!`;
+      updateScore(players.COMPUTER);
+      postRoundWinner(players.COMPUTER);
     }
+    return "Rock beats Scissors!";
   } else if (player > computer) {
-    return `Computer Plays ${computerSelection}
-    ${playerSelection} beats ${computerSelection}!
-    Player Wins!`;
+    updateScore(players.PLAYER);
+    postRoundWinner(players.PLAYER);
+    return `${playerSelection} beats ${computerSelection}!`;
   } else if (player === computer) {
+    // If TIE don't update score
     return `Both picked ${computerSelection}. Tie!`;
   } else {
-    return `${computerSelection} beats ${playerSelection}! Computer Wins!`;
+    updateScore(players.COMPUTER);
+    postRoundWinner(players.COMPUTER);
+    return `${computerSelection} beats ${playerSelection}!`;
   }
 }
 
-function updateScore() {
-  const playerScoreDisplay = document.querySelector("#player-score");
-  const computerScoreDisplay = document.querySelector("#computer-score");
-  playerScoreDisplay.textContent = playerScore;
-  computerScoreDisplay.textContent = computerScore;
+function updateScore(winner) {
+  console.log("updateScore");
+  if (winner === players.PLAYER) {
+    playerScore++;
+    const playerScoreDisplay = document.querySelector("#player-score");
+    playerScoreDisplay.textContent = playerScore;
+  } else if (winner === players.COMPUTER) {
+    computerScore++;
+    const computerScoreDisplay = document.querySelector("#computer-score");
+    computerScoreDisplay.textContent = computerScore;
+  }
+}
+
+function postComputerPick(pick) {
+  const computerPick = document.querySelector("#computer-pick");
+  computerPick.textContent = `Computer: ${pick}`;
+}
+
+function postCommentary(message) {
+  console.log("postCommentary");
+  const commentary = document.querySelector(".commentary");
+  commentary.textContent = message;
+}
+
+function postRoundWinner(winner) {
+  const roundWinner = document.querySelector(".round-winner");
+  if (winner === players.PLAYER) {
+    roundWinner.textContent = "You Win!";
+  } else if (winner === players.COMPUTER) {
+    roundWinner.textContent = "You Lose!";
+  } else {
+    roundWinner.textContent = "";
+  }
+}
+
+function checkWinner() {
+  if (playerScore >= 5) {
+    return players.PLAYER;
+  } else if (computerScore >= 5) {
+    return players.COMPUTER;
+  } else {
+    return null;
+  }
+}
+
+function postWinner(winner) {
+  const gameWinner = document.querySelector("#game-winner");
+  if (winner === players.PLAYER) {
+    gameWinner.textContent = "You Win!";
+  } else {
+    gameWinner.textContent = "You Lose!";
+  }
 }
 
 // Event Listeners
 const selectionButtons = document.querySelectorAll("button");
 selectionButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    // TODO: Change out display
-    display.textContent = playRound(
-      selectionOptions[Number(button.id)],
-      computerPlay()
+    postCommentary(
+      playRound(selectionOptions[Number(button.id)], computerPlay())
     );
+    if (checkWinner() !== null) {
+      postWinner(checkWinner);
+    }
   });
 });
 

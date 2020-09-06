@@ -10,6 +10,10 @@ body {
   height: 100%;
 }
 
+#results {
+  width: 100%;
+}
+
 button img {
   width: 150px;
   height: 150px;
@@ -19,10 +23,6 @@ button img {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-#display {
-  width: 100%;
 }
 
 .scores {
