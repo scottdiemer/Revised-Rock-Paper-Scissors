@@ -1,14 +1,51 @@
 // Set array with choices
-const selectionOptions = ["Rock", "Paper", "Scissors"];
-let playerScore = 0;
-let computerScore = 0;
-const gameRound = {
-  winner: null,
-  playerSelection: null,
-  computerSelection: computerPlay(),
-  message: null,
+// const selectionOptions = ["Rock", "Paper", "Scissors"];
+const selectionOptions = {
+  ROCK: 0,
+  PAPER: 1,
+  SCISSORS: 2,
 };
-const display = document.querySelector("#display");
+
+class scoreBoard {
+  constructor() {
+    this.winner = null;
+    this.playerScore = 0;
+    this.computerScore = 0;
+  }
+
+  players = { PLAYER: "player", COMPUTER: "computer" };
+
+  set winner(player) {
+    this.winner = player;
+    if (player === players.PLAYER) {
+      this.playerScore++;
+    } else {
+      this.computerScore++;
+    }
+  }
+
+  get winner() {
+    this.winner;
+  }
+}
+
+class commentaryMessage {
+  constructor(playerSelection, computerSelection) {
+    this.playerSelection = playerSelection;
+    this.computerSelection = computerSelection;
+  }
+
+  get message {
+    
+  }
+
+  messages = {
+    ROCK_BEATS_SCISSORS: "Rock Beats Scissors",
+    PAPER_BEATS_ROCK: "Paper Beats Rock",
+    SCISSORS_BEATS_PAPER: "Scissors Beats Paper",
+    TIE: `Both Picked ${capitalizeWord(playerSelection)}`,
+  };
+}
 
 // Randomly return either Rock, Paper, or Scissors
 function computerPlay() {
@@ -33,12 +70,12 @@ function playRound(playerSelection, computerSelection) {
   // or tie
   if ((player === 0 && computer === 2) || (player === 2 && computer === 0)) {
     if (player === 0) {
-      playerScore++;
+      scoreBoard.winner = players.PLAYER;
+      commentaryMessage(playerSelection, computerSelection)
       return `Computer Plays: ${computerSelection}
       Rock beats Scissors!
       You Win!`;
     } else {
-      computerScore++;
       return `Computer Plays: ${computerSelection}
       Rock beats Scissors!
       You Lose!`;
@@ -65,7 +102,7 @@ function updateScore() {
 const selectionButtons = document.querySelectorAll("button");
 selectionButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    console.log(button.id);
+    // TODO: Change out display
     display.textContent = playRound(
       selectionOptions[Number(button.id)],
       computerPlay()
